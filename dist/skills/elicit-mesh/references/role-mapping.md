@@ -2,6 +2,8 @@
 
 Identify collaboration participants by what they **actually do**, not what the agent guesses their job title implies.
 
+For newly introduced artifacts, follow `input-discovery.md`: establish what the artifact is before asking who provides it. Distinguish the author, sender, uploader, and recipient. A user saying “we receive it” does not identify its supplier.
+
 ## Required fields
 
 - `project.goal`: concrete shared result, ideally a reviewable artifact.

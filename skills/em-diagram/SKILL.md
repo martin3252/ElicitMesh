@@ -7,9 +7,10 @@ description: Turn an idea, brief, or existing notes into a workflow diagram show
 
 The diagram is the deliverable. Naming a future output does not authorize creating it or executing the workflow.
 
-Shared resources live beside this installed skill; in the source checkout use the repository root. Read `references/schema.md`, `references/role-mapping.md`, and `references/domain-boundaries.md`.
+Shared resources live beside this installed skill; in the source checkout use the repository root. Read `references/input-discovery.md`, `references/schema.md`, `references/role-mapping.md`, and `references/domain-boundaries.md`.
 
 1. Accept a brief, existing artifacts, or the user's idea directly. Reuse known roles and sources; ask only for missing information that materially prevents diagramming.
+   For a newly introduced input, clarify its meaning first and its supplier next, one unanswered question at a time. Do not add receive/read/extract nodes from an unexplained document name. If the user cannot answer and wants a diagram, show an unresolved input and route the question to the relevant collaborator.
 2. Propose 3–8 nodes with stable IDs, action titles, and owner roles. Represent unresolved ownership as a declared unknown role rather than pretending authority is settled.
 3. For each node specify input names/documents/fields, type, whether required (`true`, `false`, or `unknown`), output names and expected formats, and the appropriate reviewer. Describe outputs; do not generate them.
 4. Write `workflow.yaml` and `io-contract.yaml`. Label conditional edges, missing-information paths, and review handoffs. Do not invent legal deadlines, mandatory fields, or approval authority.

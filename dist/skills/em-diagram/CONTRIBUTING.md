@@ -12,4 +12,6 @@ Contributions are welcome if they improve the safety, clarity or portability of 
 
 Questions and proposed domain templates should identify the intended role with review authority and applicable jurisdiction, standard or project scope. Domain templates without reviewed evidence must be marked as experimental.
 
+For changes to conversational discovery, use the [manual input-discovery scenarios](https://github.com/martin3252/ElicitMesh/blob/main/tests/scenarios/input-discovery.md). Record actual agent responses and distinguish behavioral evaluation from structural/package tests; passing the Python suite does not prove that an agent asks the right next question.
+
 This repository is independent from Google EGM; references to EGM are conceptual and not an assertion of compatibility with every version or agent runtime.

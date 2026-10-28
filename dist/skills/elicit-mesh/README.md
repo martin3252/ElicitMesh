@@ -24,6 +24,10 @@ Start at any stage. Existing notes, diagrams, and contracts are welcome; you do 
 
 Every diagram node shows **action, owner, inputs, outputs, and approval status**. Detailed types, required/unknown flags, expected output formats, and reviewers live in the accompanying contracts. Branches show their conditions, including missing-information paths.
 
+### Clarify new inputs before drawing them
+
+When a new document or abbreviation appears, ElicitMesh first establishes **what it is**, then **who provides it**, one unanswered question at a time. For “we receive F3 after F2,” the next question is “What is F3 in this workflow?” Once explained, it asks who provides it to the platform. Known answers are reused; unanswered domain questions go to the appropriate collaborator. A document name alone does not become an invented processing path.
+
 ## What you get
 
 For an AI engineer and lawyer discussing an information-collection process, the output can look like this:

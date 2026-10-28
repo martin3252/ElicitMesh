@@ -3,13 +3,13 @@
   "owner": { "name": "Martin Huang" },
   "metadata": {
     "description": "ElicitMesh — role-aware expert knowledge elicitation",
-    "version": "0.2.1"
+    "version": "0.2.2"
   },
   "plugins": [
     {
       "name": "elicit-mesh",
       "description": "Brainstorm, diagram, and review workflows with explicit per-node inputs and outputs. English and Traditional Chinese.",
-      "version": "0.2.1",
+      "version": "0.2.2",
       "source": "./",
       "strict": false,
       "skills": ["./dist/skills/elicit-mesh", "./dist/skills/em-brainstorm", "./dist/skills/em-diagram", "./dist/skills/em-review"],
