@@ -5,26 +5,31 @@ nodes:
     evidence_status: inferred
     approval_status: pending
     source_refs: []
-  - id: draft_document
-    title: Draft application document
+  - id: specify_information
+    title: Specify information and missing fields
     owner_role: engineer
     evidence_status: inferred
     approval_status: pending
     source_refs: []
-  - id: review_draft
-    title: Review draft with qualified lawyer
+  - id: review_specification
+    title: Lawyer reviews proposed information flow
     owner_role: lawyer
     evidence_status: inferred
     approval_status: pending
     source_refs: []
 edges:
   - from: collect_facts
-    to: draft_document
+    to: specify_information
     condition: Candidate intake record assembled (completeness pending review)
     evidence_status: inferred
     approval_status: pending
-  - from: draft_document
-    to: review_draft
-    condition: Draft exists and is clearly marked unapproved
+  - from: specify_information
+    to: review_specification
+    condition: Proposed input specification is ready for review
+    evidence_status: inferred
+    approval_status: pending
+  - from: review_specification
+    to: collect_facts
+    condition: Required information is missing or disputed
     evidence_status: inferred
     approval_status: pending

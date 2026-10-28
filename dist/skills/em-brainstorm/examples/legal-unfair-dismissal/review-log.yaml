@@ -1,0 +1,9 @@
+reviews:
+  - id: review-001
+    target: workflow.md
+    artifact_version: v1
+    reviewer_role: lawyer
+    reviewer_identity: null
+    received_at: null
+    status: pending
+    feedback: []

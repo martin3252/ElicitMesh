@@ -1,119 +1,101 @@
-# ElicitMesh artifact schemas (v0.1)
+# Workflow diagram schema (v0.2)
 
-Treat YAML as canonical; Markdown is a human-readable view. Use empty arrays / `null` for missing knowledge, not invented facts. The validator checks structural invariants, not professional correctness.
+YAML describes the proposed process; `workflow.md` is its rendered view. Output names describe future deliverables, not files ElicitMesh must generate.
 
-## role-map.yaml
+## Minimal diagram bundle
+
+- `role-map.yaml` and `role-map.md`: participants, responsibilities, unresolved ownership.
+- `sources.md`: actual reviewed sources, unvisited links, dates/versions where known.
+- `workflow.yaml`: nodes and conditional edges.
+- `io-contract.yaml`: each node's inputs and outputs.
+- `workflow.md`: Mermaid diagram with action, owner, inputs, outputs, and review status inside every node.
+- `expert-questions.md`: prioritized questions assigned to real roles.
+- `review-log.yaml`: pending reviews or actual corrections with provenance.
+
+Brainstorming only needs `brief.md`; do not require this complete bundle before diagramming.
+
+## Roles
 
 ```yaml
 project:
-  title: Example project
-  goal: A concrete shared deliverable
-  domain: legal-tech
+  title: Example
+  goal: Agree on the information-collection workflow
+  domain: example
 roles:
-  - id: engineer
-    title: Software engineer
-    expertise: [software systems]
-    provides: [technical implementation]
-    needs: [domain constraints]
-    responsibilities: [workflow implementation]
-    can_approve: [technical behavior]
-  - id: expert
-    title: Domain expert
-    expertise: [domain rules]
-    provides: [reviewed sample corrections]
-    needs: [reviewable sample]
-    responsibilities: [domain quality review]
-    can_approve: [specified domain content]
+  - id: owner
+    title: Process owner (authority to confirm)
+    expertise: []
+    provides: [process notes]
+    needs: [reviewed diagram]
+    responsibilities: [clarify process]
+    can_approve: []
+  - id: reviewer
+    title: Reviewer (identity to confirm)
+    expertise: []
+    provides: [corrections]
+    needs: [diagram with node I/O]
+    responsibilities: [review proposed handoffs]
+    can_approve: []
 ```
 
-## workflow.yaml
+Use a declared unresolved role for unknown ownership; do not fabricate approval authority.
 
-```yaml
-nodes:
-  - id: collect_input
-    title: Collect input
-    owner_role: engineer
-    evidence_status: inferred
-    approval_status: pending
-    source_refs: []
-  - id: create_draft
-    title: Draft output
-    owner_role: engineer
-    evidence_status: inferred
-    approval_status: pending
-    source_refs: []
-edges:
-  - from: collect_input
-    to: create_draft
-    condition: Input ready
-    evidence_status: inferred
-    approval_status: pending
-```
+## Nodes, edges, and contracts
 
-## io-contract.yaml
+A node requires `id`, `title`, `owner_role`, `evidence_status`, and `approval_status`.
+An edge requires `from`, `to`, a nonempty `condition`, and both states.
+Each node has exactly one contract:
 
 ```yaml
 contracts:
-  - node_id: collect_input
+  - node_id: collect_information
     inputs:
-      - name: case_facts
+      - name: supplied_notes
         type: text
         required: unknown
         evidence_status: inferred
         approval_status: pending
         source_refs: []
-        approver_role: expert
+        approver_role: reviewer
     outputs:
-      - name: intake_record
-        format: structured_data
-        quality_criteria: [Record received facts verbatim]
+      - name: information_register
+        format: table_to_confirm
+        quality_criteria: [Show missing information explicitly]
         evidence_status: inferred
         approval_status: pending
         source_refs: []
-        approver_role: expert
+        approver_role: reviewer
 ```
 
-`required` is `true`, `false`, or `unknown`; unknown is strongly preferred to guessing. `format` is the expected presentation or data format, not necessarily a software schema.
+Inputs and outputs must be nonempty lists. If unresolved, use a named entry such as `input_to_confirm` with `type: unknown` and `required: unknown`, or `output_to_confirm` with `format: unknown`. Requirements are proposals until reviewed.
 
-## review-log.yaml
+## Evidence and approval
+
+Evidence: `source_supported | inferred | unknown`.
+Approval: `pending | approved | rejected | needs_info`.
+A source-supported entry needs `source_refs`. An approved entry needs `approved_by` and `approved_at`, and explicit human confirmation scoped to that version. The validator checks metadata, not whether that confirmation really happened.
+
+## Review log
 
 ```yaml
 reviews:
   - id: review-001
-    target: sample-output.md
-    reviewer_role: expert
+    target: workflow.md
+    artifact_version: v1
+    reviewer_role: reviewer
     reviewer_identity: null
     received_at: null
     status: pending
     feedback: []
 ```
 
-Only store reviewer identity with consent. A pending review placeholder is not evidence of review.
+Completed reviews require a consented reviewer identity and received date. Record each actual correction's node/field, original comment, proposed change, and resolution; do not fabricate reviews.
 
-## quality-rules.yaml
+## Render and validate
 
-```yaml
-rules:
-  - id: q001
-    statement: Date references must be consistent within this draft
-    scope: this document type in this project
-    originating_feedback: null
-    evidence_status: inferred
-    approval_status: pending
-    approved_by: null
-    approved_at: null
-    approver_role: expert
-    check_type: deterministic
-    test_case: Compare relevant date fields for inconsistencies
+```sh
+python scripts/render_diagram.py <bundle-directory>
+python scripts/validate_spec.py <bundle-directory>
 ```
 
-Approved rules require `approved_by`, `approved_at`, and `originating_feedback` or `source_refs`. If approval scope changes, downgrade to `pending` until re-approved.
-
-## Provenance model
-
-Use two independent axes:
-
-- Evidence: `source_supported | inferred | unknown`
-- Approval: `pending | approved | rejected | needs_info`
-
-`source_supported` is not the same as `approved`; an official source may describe a process yet leave implementation questions unanswered. `approved` is not the same as `true` across all domains; it must be scoped to one artifact, rule, jurisdiction, project, or version.
+The renderer places I/O inside each node and labels every edge. The validator checks role/node references, I/O coverage, provenance/approval metadata, and that the diagram matches its YAML. Regenerate after editing the YAML; keep extra commentary in the brief or questions file. Neither command validates domain accuracy.

@@ -10,8 +10,9 @@ ROOT = Path(__file__).resolve().parents[1]
 FILES = (
     "SKILL.md", "README.md", "README.zh-TW.md", "LICENSE",
     "CONTRIBUTING.md", "SECURITY.md", "requirements.txt",
-    "agents/openai.yaml", "scripts/validate_spec.py", "tests/test_validate_spec.py",
+    "agents/openai.yaml", "scripts/validate_spec.py", "scripts/render_diagram.py", "tests/test_validate_spec.py",
 )
+SKILLS = ("elicit-mesh", "em-brainstorm", "em-diagram", "em-review")
 
 
 def source_files() -> list[Path]:
@@ -22,19 +23,28 @@ def source_files() -> list[Path]:
     return sorted(files)
 
 
+def skill_files(name):
+    files = {p.relative_to(ROOT): p for p in source_files()}
+    if name != "elicit-mesh":
+        for relative in ("SKILL.md", "agents/openai.yaml"):
+            files[Path(relative)] = ROOT / "skills" / name / relative
+    return sorted(files.items())
+
+
 def build_codex(destination: Path) -> None:
-    """Materialize Codex's skill-directory layout from the canonical sources."""
-    for path in source_files():
-        target = destination / "elicit-mesh" / path.relative_to(ROOT)
-        target.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(path, target)
+    """Materialize the same four standalone skills for both plugin hosts."""
+    for name in SKILLS:
+        for relative, path in skill_files(name):
+            target = destination / name / relative
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(path, target)
 
 
-def build(destination: Path) -> None:
+def build(destination: Path, skill="elicit-mesh") -> None:
     destination.parent.mkdir(parents=True, exist_ok=True)
     with ZipFile(destination, "w", compression=ZIP_DEFLATED) as archive:
-        for path in source_files():
-            name = "elicit-mesh/" + path.relative_to(ROOT).as_posix()
+        for relative, path in skill_files(skill):
+            name = skill + "/" + relative.as_posix()
             info = ZipInfo(name, date_time=(2026, 1, 1, 0, 0, 0))
             info.create_system = 3
             info.external_attr = 0o100644 << 16
@@ -47,5 +57,7 @@ if __name__ == "__main__":
     parser.add_argument("--output", type=Path, default=ROOT / "dist" / "skill.zip")
     args = parser.parse_args()
     build(args.output)
+    for skill in SKILLS[1:]:
+        build(args.output.parent / f"{skill}.zip", skill)
     build_codex(ROOT / "dist" / "skills")
     print(f"Built {args.output}")

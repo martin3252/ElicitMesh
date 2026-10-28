@@ -5,8 +5,8 @@ nodes:
     evidence_status: inferred
     approval_status: pending
     source_refs: []
-  - id: prepare_scope_summary
-    title: Prepare candidate work-scope summary
+  - id: map_scope_gaps
+    title: Identify scope information and gaps
     owner_role: qs
     evidence_status: inferred
     approval_status: pending
@@ -19,12 +19,17 @@ nodes:
     source_refs: []
 edges:
   - from: collect_scope_sources
-    to: prepare_scope_summary
+    to: map_scope_gaps
     condition: Documents and revisions identified or explicitly marked missing
     evidence_status: inferred
     approval_status: pending
-  - from: prepare_scope_summary
+  - from: map_scope_gaps
     to: review_site_clarity
-    condition: Candidate scope summary is available for discussion, not construction authorization
+    condition: Proposed information gaps are ready for discussion
+    evidence_status: inferred
+    approval_status: pending
+  - from: review_site_clarity
+    to: collect_scope_sources
+    condition: Sources or revisions are missing or conflicting
     evidence_status: inferred
     approval_status: pending

@@ -1,0 +1,4 @@
+interface:
+  display_name: "ElicitMesh Brainstorm"
+  short_description: "Clarify the idea, roles, sources, and unknowns"
+  default_prompt: "Use em-brainstorm to clarify our goal, collaborators, scope, and open questions before diagramming."

@@ -1,19 +1,19 @@
 project:
-  title: Unfair dismissal draft workflow (illustrative)
-  goal: Produce a reviewable application draft from applicant-supplied facts
+  title: Information-collection workflow (illustrative)
+  goal: Agree on a candidate diagram and per-node information requirements
   domain: legal-tech
 roles:
   - id: engineer
     title: AI/software engineer
     expertise: [software integration, data handling, document generation]
-    provides: [candidate workflow, input UI, sample draft, technical checks]
+    provides: [candidate diagram, input field proposals, technical checks]
     needs: [domain-required fields, output quality expectations, exceptions]
-    responsibilities: [implement workflow, implement deterministic checks]
+    responsibilities: [map workflow and information handoffs]
     can_approve: [technical behavior]
   - id: lawyer
     title: Lawyer
     expertise: [legal process, legal document quality]
-    provides: [domain review, corrections to draft, approval of domain rules]
-    needs: [candidate workflow, concrete sample draft, known facts and sources]
-    responsibilities: [review domain requirements, review draft quality]
+    provides: [domain review, corrections to nodes and field requirements]
+    needs: [candidate diagram, node I/O specification, known sources]
+    responsibilities: [review proposed information requirements]
     can_approve: [scoped legal content requirements]

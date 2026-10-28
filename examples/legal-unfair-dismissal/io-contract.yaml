@@ -30,7 +30,7 @@ contracts:
         approval_status: pending
         source_refs: []
         approver_role: lawyer
-  - node_id: draft_document
+  - node_id: specify_information
     inputs:
       - name: candidate_intake_record
         type: object
@@ -39,7 +39,7 @@ contracts:
         approval_status: pending
         source_refs: []
         approver_role: lawyer
-      - name: form_version
+      - name: source_version
         type: string
         required: unknown
         evidence_status: unknown
@@ -47,17 +47,17 @@ contracts:
         source_refs: []
         approver_role: lawyer
     outputs:
-      - name: application_draft
-        format: document_format_to_confirm
-        quality_criteria: [No invented case facts, Flag missing information, Clearly state draft status]
+      - name: proposed_input_specification
+        format: field_and_handoff_table
+        quality_criteria: [No invented required fields, Flag missing information, Keep requirements pending]
         evidence_status: inferred
         approval_status: pending
         source_refs: []
         approver_role: lawyer
-  - node_id: review_draft
+  - node_id: review_specification
     inputs:
-      - name: application_draft
-        type: document
+      - name: proposed_input_specification
+        type: table
         required: unknown
         evidence_status: inferred
         approval_status: pending

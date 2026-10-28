@@ -5,4 +5,4 @@
 | QS | Scope and quantity references, commercial document interpretation | On-site observations and scope questions | Scoped commercial matters if authorized |
 | Site supervisor | Site observations and constructability questions | Identifiable drawings, work location, clarified scope | Site review if authorized; does not replace safety approval |
 
-Shared goal: reviewable scope clarification summary, not permission to proceed.
+Shared goal: a reviewable source-and-clarification diagram with explicit node I/O; requirements remain pending review.

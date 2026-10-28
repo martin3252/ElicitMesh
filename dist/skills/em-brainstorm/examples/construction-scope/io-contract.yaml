@@ -1,0 +1,59 @@
+contracts:
+  - node_id: collect_scope_sources
+    inputs:
+      - name: drawing_reference
+        type: string
+        required: unknown
+        evidence_status: unknown
+        approval_status: needs_info
+        source_refs: []
+        approver_role: qs
+      - name: boq_item_reference
+        type: string
+        required: unknown
+        evidence_status: unknown
+        approval_status: needs_info
+        source_refs: []
+        approver_role: qs
+    outputs:
+      - name: source_register
+        format: list
+        quality_criteria: [Show version identifiers or mark as missing]
+        evidence_status: inferred
+        approval_status: pending
+        source_refs: []
+        approver_role: qs
+  - node_id: map_scope_gaps
+    inputs:
+      - name: source_register
+        type: object
+        required: unknown
+        evidence_status: inferred
+        approval_status: pending
+        source_refs: []
+        approver_role: qs
+    outputs:
+      - name: scope_information_gaps
+        format: field_and_reference_table
+        quality_criteria: [Identify work area, Expose unresolved scope differences]
+        evidence_status: inferred
+        approval_status: pending
+        source_refs: []
+        approver_role: qs
+  - node_id: review_site_clarity
+    inputs:
+      - name: scope_information_gaps
+        type: table
+        required: unknown
+        evidence_status: inferred
+        approval_status: pending
+        source_refs: []
+        approver_role: supervisor
+    outputs:
+      - name: clarification_list
+        format: annotated_comments
+        quality_criteria: [Record each discrepancy and assigned clarification owner]
+        evidence_status: inferred
+        approval_status: pending
+        source_refs: []
+        approver_role: supervisor

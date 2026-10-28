@@ -1,6 +1,7 @@
 reviews:
   - id: review-001
-    target: sample-output.md
+    target: workflow.md
+    artifact_version: v1
     reviewer_role: lawyer
     reviewer_identity: null
     received_at: null

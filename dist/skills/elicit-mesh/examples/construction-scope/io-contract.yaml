@@ -23,7 +23,7 @@ contracts:
         approval_status: pending
         source_refs: []
         approver_role: qs
-  - node_id: prepare_scope_summary
+  - node_id: map_scope_gaps
     inputs:
       - name: source_register
         type: object
@@ -33,8 +33,8 @@ contracts:
         source_refs: []
         approver_role: qs
     outputs:
-      - name: candidate_scope_summary
-        format: text_and_references
+      - name: scope_information_gaps
+        format: field_and_reference_table
         quality_criteria: [Identify work area, Expose unresolved scope differences]
         evidence_status: inferred
         approval_status: pending
@@ -42,8 +42,8 @@ contracts:
         approver_role: qs
   - node_id: review_site_clarity
     inputs:
-      - name: candidate_scope_summary
-        type: document
+      - name: scope_information_gaps
+        type: table
         required: unknown
         evidence_status: inferred
         approval_status: pending

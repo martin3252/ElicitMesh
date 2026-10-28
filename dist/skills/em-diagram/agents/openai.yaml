@@ -1,0 +1,4 @@
+interface:
+  display_name: "ElicitMesh Diagram"
+  short_description: "Draw the workflow with inputs and outputs inside every node"
+  default_prompt: "Use em-diagram to draw the process with each node's action, owner, inputs, and outputs."

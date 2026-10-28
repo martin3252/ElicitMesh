@@ -1,5 +1,5 @@
 interface:
   display_name: "ElicitMesh"
-  short_description: "Role-aware expert knowledge to verifiable specs"
+  short_description: "From idea to diagram with per-node inputs and outputs"
   brand_color: "#2563EB"
-  default_prompt: "Use $elicit-mesh to map collaboration roles, propose a workflow, and draft an artifact for expert review. Respond in my language."
+  default_prompt: "Use ElicitMesh to draw a workflow diagram with owners, inputs, and outputs at every node. Respond in my language."

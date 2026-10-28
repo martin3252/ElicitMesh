@@ -8,7 +8,8 @@ from zipfile import ZipFile
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from build_skill import build, build_codex
+from build_skill import build, build_codex, SKILLS
+import yaml
 from validate_spec import validate_project
 
 
@@ -22,8 +23,24 @@ class DistributionTests(unittest.TestCase):
             committed = ROOT / "dist/skills"
             self.assertEqual(generated, {p.relative_to(committed).as_posix(): p.read_bytes()
                                          for p in committed.rglob("*") if p.is_file()})
-            with ZipFile(ROOT / "dist/skill.zip") as archive:
-                self.assertEqual(generated, {n: archive.read(n) for n in archive.namelist()})
+            for name in SKILLS:
+                filename = "skill.zip" if name == "elicit-mesh" else f"{name}.zip"
+                with ZipFile(ROOT / "dist" / filename) as archive:
+                    self.assertEqual({n: data for n, data in generated.items() if n.startswith(name + "/")},
+                                     {n: archive.read(n) for n in archive.namelist()})
+
+    def test_all_stage_packages_are_self_contained(self):
+        for name in SKILLS:
+            with self.subTest(skill=name), tempfile.TemporaryDirectory() as tmp:
+                skill = ROOT / "dist/skills" / name
+                frontmatter = yaml.safe_load((skill / "SKILL.md").read_text().split("---")[1])
+                self.assertEqual(frontmatter["name"], name)
+                self.assertTrue((skill / "agents/openai.yaml").is_file())
+                self.assertTrue((skill / "scripts/render_diagram.py").is_file())
+                self.assertFalse(any(skill.rglob("sample-output.md")))
+                self.assertFalse(any(skill.rglob("quality-rules.yaml")))
+                for example in ("legal-unfair-dismissal", "construction-scope"):
+                    self.assertEqual(validate_project(skill / "examples" / example), [])
 
     def test_download_matches_source_and_build_is_reproducible(self):
         with tempfile.TemporaryDirectory() as tmp:

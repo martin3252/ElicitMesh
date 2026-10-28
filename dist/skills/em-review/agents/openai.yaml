@@ -1,0 +1,4 @@
+interface:
+  display_name: "ElicitMesh Review"
+  short_description: "Review node I/O, resolve questions, and revise the diagram"
+  default_prompt: "Use em-review to find missing inputs, ambiguous outputs, and unclear handoffs in our diagram."

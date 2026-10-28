@@ -1,0 +1,9 @@
+reviews:
+  - id: site-review-001
+    target: workflow.md
+    artifact_version: v1
+    reviewer_role: supervisor
+    reviewer_identity: null
+    received_at: null
+    status: pending
+    feedback: []

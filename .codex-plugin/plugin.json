@@ -1,7 +1,7 @@
 {
   "name": "elicit-mesh",
-  "version": "0.1.1",
-  "description": "Role-aware expert knowledge elicitation with English and Traditional Chinese support.",
+  "version": "0.2.0",
+  "description": "Brainstorm, diagram, and review workflows with per-node input/output specifications. Supports English and Traditional Chinese.",
   "author": { "name": "Martin Huang" },
   "homepage": "https://github.com/martin3252/ElicitMesh",
   "repository": "https://github.com/martin3252/ElicitMesh",
@@ -9,10 +9,10 @@
   "skills": "./dist/skills/",
   "interface": {
     "displayName": "ElicitMesh",
-    "shortDescription": "Turn expert feedback into verifiable workflows and quality rules",
+    "shortDescription": "From idea to workflow diagram with clear node inputs and outputs",
     "defaultPrompt": [
-      "Use ElicitMesh to map collaboration roles, propose a workflow, and draft an artifact for expert review.",
-      "使用 ElicitMesh 盤點協作角色、提出工作流程，並產出供專家審查的草稿。"
+      "Use ElicitMesh to draw a workflow diagram showing each node's owner, inputs, and outputs.",
+      "使用 ElicitMesh 繪製流程圖，標示每個節點的負責人、輸入與輸出。"
     ]
   }
 }

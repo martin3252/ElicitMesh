@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the structural invariants of a ElicitMesh artifact bundle.
+"""Validate an ElicitMesh workflow diagram and its per-node I/O contracts.
 
 This is not a professional, legal, engineering, or factual validator.
 Requires PyYAML. Run: python scripts/validate_spec.py examples/legal-unfair-dismissal
@@ -22,9 +22,8 @@ except ImportError:
 EVIDENCE = {"source_supported", "inferred", "unknown"}
 APPROVAL = {"pending", "approved", "rejected", "needs_info"}
 REVIEW = {"pending", "completed", "blocked"}
-CHECKS = {"deterministic", "human_review", "llm_assisted"}
-YAML_FILES = ("role-map.yaml", "workflow.yaml", "io-contract.yaml", "review-log.yaml", "quality-rules.yaml")
-MARKDOWN_FILES = ("role-map.md", "sources.md", "workflow.md", "expert-questions.md", "sample-output.md", "acceptance-criteria.md")
+YAML_FILES = ("role-map.yaml", "workflow.yaml", "io-contract.yaml", "review-log.yaml")
+MARKDOWN_FILES = ("role-map.md", "sources.md", "workflow.md", "expert-questions.md")
 
 
 def _nonblank(x: Any) -> bool:
@@ -159,8 +158,8 @@ def validate_project(folder: Path) -> list[str]:
             seen_contracts.add(node_id)
         for direction in ("inputs", "outputs"):
             entries = contract.get(direction)
-            if not isinstance(entries, list):
-                errors.append(f"{label}.{direction} must be a list")
+            if not isinstance(entries, list) or not entries:
+                errors.append(f"{label}.{direction} must be a nonempty list (use an explicitly unknown entry when unresolved)")
                 continue
             names: set[str] = set()
             for j, e in enumerate(entries):
@@ -193,7 +192,6 @@ def validate_project(folder: Path) -> list[str]:
     if not isinstance(reviews, list):
         errors.append("review-log.yaml: reviews must be a list")
     review_ids: set[str] = set()
-    completed_reviews: set[str] = set()
     for i, item in enumerate(_list(reviews)):
         label = f"review-log.yaml: reviews[{i}]"
         review = _object(item)
@@ -213,40 +211,11 @@ def validate_project(folder: Path) -> list[str]:
         if review.get("status") == "completed":
             if not _nonblank(review.get("reviewer_identity")) or not review.get("received_at"):
                 errors.append(f"{label}: completed review requires reviewer_identity and received_at")
-            elif _nonblank(rid):
-                completed_reviews.add(rid)
 
-    rule_doc = documents.get("quality-rules.yaml", {})
-    rules = rule_doc.get("rules")
-    if not isinstance(rules, list):
-        errors.append("quality-rules.yaml: rules must be a list")
-    rule_ids: set[str] = set()
-    for i, item in enumerate(_list(rules)):
-        label = f"quality-rules.yaml: rules[{i}]"
-        rule = _object(item)
-        rid = rule.get("id")
-        if not _nonblank(rid):
-            errors.append(f"{label}.id must be nonempty")
-        elif rid in rule_ids:
-            errors.append(f"{label}.id duplicate '{rid}'")
-        else:
-            rule_ids.add(rid)
-        if not _nonblank(rule.get("statement")) or not _nonblank(rule.get("scope")):
-            errors.append(f"{label}: statement and scope must be nonempty")
-        if rule.get("approver_role") not in role_ids:
-            errors.append(f"{label}.approver_role must refer to a declared role")
-        if rule.get("check_type") not in CHECKS:
-            errors.append(f"{label}.check_type must be {sorted(CHECKS)}")
-        if not _nonblank(rule.get("test_case")):
-            errors.append(f"{label}.test_case must be nonempty")
-        check_state(rule, label)
-        if rule.get("originating_feedback") and rule["originating_feedback"] not in review_ids:
-            errors.append(f"{label}.originating_feedback must refer to a declared review id")
-        if rule.get("approval_status") == "approved":
-            if not rule.get("originating_feedback") and not _list(rule.get("source_refs")):
-                errors.append(f"{label}: approved rule requires originating_feedback or source_refs")
-            if rule.get("originating_feedback") and rule["originating_feedback"] not in completed_reviews:
-                errors.append(f"{label}: approved feedback-based rule requires a completed review with identified reviewer")
+    if not errors:
+        from render_diagram import render_project
+        if (folder / "workflow.md").read_text(encoding="utf-8") != render_project(folder):
+            errors.append("workflow.md: diagram is stale or omits node I/O; run scripts/render_diagram.py")
 
     return errors
 

@@ -2,9 +2,9 @@
 
 | Role | Can provide | Needs | Approval responsibility |
 | --- | --- | --- | --- |
-| Engineer | Process model, fields, draft generation and technical tests | Domain constraints and example corrections | Technical behavior only |
-| Lawyer | Legal requirements and edits on real drafts | Concrete artifact and relevant facts | Scoped domain quality and requirements |
+| Engineer | Candidate diagram, field proposals and technical checks | Domain constraints and node corrections | Technical behavior only |
+| Lawyer | Review of proposed information requirements | Diagram, per-node I/O and source versions | Scoped domain requirements |
 
-Shared outcome: a **draft for qualified professional review**, not automatic filing.
+Shared outcome: a **reviewable workflow diagram with node I/O**, with domain requirements pending confirmation.
 
 Knowledge interface: `engineer needs precise input/output requirements` -> `lawyer can review proposed fields and a concrete document` -> `engineer turns accepted feedback into implementation and checks`.

@@ -1,6 +1,6 @@
 project:
   title: Construction work-scope confirmation (illustrative)
-  goal: Produce a reviewable site work-scope summary that identifies disputed or missing information
+  goal: Agree on a candidate source-and-clarification diagram with per-node I/O
   domain: construction
 roles:
   - id: qs

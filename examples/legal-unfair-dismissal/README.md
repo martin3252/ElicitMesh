@@ -1,8 +1,8 @@
 # Example: AI engineer + lawyer (illustrative)
 
-**Goal:** Build a candidate workflow for producing a lawyer-reviewable draft, with explicit inputs, outputs, responsibilities and pending quality requirements.
+**Goal:** Draw a candidate information-collection workflow with explicit per-node inputs, outputs, responsibilities, and missing-information branches. The diagram is the deliverable; no application document is generated.
 
-**Status:** All rules and nodes are unapproved illustrative candidates. No attorney has reviewed this repository's example. This example is not a current legal guide, not a determination of eligibility, and not a ready-to-file document.
+**Status:** All nodes and field requirements are unapproved illustrative candidates. No attorney has reviewed this repository's example. This is not a current legal guide or eligibility determination.
 
 ## Starting sources
 

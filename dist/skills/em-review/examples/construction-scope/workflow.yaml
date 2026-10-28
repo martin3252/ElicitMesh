@@ -1,0 +1,35 @@
+nodes:
+  - id: collect_scope_sources
+    title: Collect drawings and BOQ references
+    owner_role: qs
+    evidence_status: inferred
+    approval_status: pending
+    source_refs: []
+  - id: map_scope_gaps
+    title: Identify scope information and gaps
+    owner_role: qs
+    evidence_status: inferred
+    approval_status: pending
+    source_refs: []
+  - id: review_site_clarity
+    title: Site supervisor checks scope clarity and identifies issues
+    owner_role: supervisor
+    evidence_status: inferred
+    approval_status: pending
+    source_refs: []
+edges:
+  - from: collect_scope_sources
+    to: map_scope_gaps
+    condition: Documents and revisions identified or explicitly marked missing
+    evidence_status: inferred
+    approval_status: pending
+  - from: map_scope_gaps
+    to: review_site_clarity
+    condition: Proposed information gaps are ready for discussion
+    evidence_status: inferred
+    approval_status: pending
+  - from: review_site_clarity
+    to: collect_scope_sources
+    condition: Sources or revisions are missing or conflicting
+    evidence_status: inferred
+    approval_status: pending
