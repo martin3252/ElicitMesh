@@ -6,6 +6,10 @@
 
 ElicitMesh helps collaborators clarify a process before building it. It draws the workflow, identifies who owns each step, and makes unknown requirements visible for expert review. The diagram is the deliverable; ElicitMesh does not generate the final legal document, scope document, or other domain output described by the process.
 
+Use it when an idea is still vague, different roles understand the process differently, or you need to agree on what information passes between steps before implementation.
+
+[Claude Code](#install-in-claude-code) · [Codex](#install-in-codex) · [Claude.ai / ZIP](#claudeai-and-portable-skills) · [First workflow](#try-your-first-workflow)
+
 ## Three focused stages
 
 | Skill | Use it to | Main output |
@@ -13,11 +17,28 @@ ElicitMesh helps collaborators clarify a process before building it. It draws th
 | `em-brainstorm` | Clarify the goal, participants, scope, sources, and unknowns | Brief and open questions |
 | `em-diagram` | Draw the process, decisions, and handoffs with explicit node I/O | Annotated diagram and I/O contracts |
 | `em-review` | Find gaps, collect real expert corrections, and revise the specification | Revised diagram and review log |
-| `elicit-mesh` | Choose the next stage or guide the full flow | The artifacts needed for your request |
+
+Use `elicit-mesh` when you want guidance on where to start or help through the full flow. It remains the main entry point alongside the three focused skills.
 
 Start at any stage. Existing notes, diagrams, and contracts are welcome; you do not need to repeat brainstorming.
 
 Every diagram node shows **action, owner, inputs, outputs, and approval status**. Detailed types, required/unknown flags, expected output formats, and reviewers live in the accompanying contracts. Branches show their conditions, including missing-information paths.
+
+## What you get
+
+For an idea such as “help our team agree on the intake process,” the output can look like this:
+
+```mermaid
+flowchart TD
+    A["Collect request<br/>Owner: Intake coordinator<br/>Inputs: request details<br/>Outputs: request record<br/>Status: proposed / pending review"]
+    B["Identify missing information<br/>Owner: Process specialist<br/>Inputs: request record<br/>Outputs: clarification list<br/>Status: proposed / pending review"]
+    C["Confirm field requirements<br/>Owner: Authorized reviewer<br/>Inputs: request record, clarification list<br/>Outputs: reviewed field list or corrections<br/>Status: proposed / pending review"]
+    A -->|Request recorded| B
+    B -->|Questions identified| C
+    C -->|More information needed| A
+```
+
+This is an illustrative specification, not a record of completed work or approval. Roles and requirements are proposals to confirm. The accompanying I/O table explains each input field and expected output format; open questions identify who can resolve missing details.
 
 ## Install in Claude Code
 
@@ -49,6 +70,15 @@ codex plugin add elicit-mesh@elicitmesh
 
 Start a new session and select a skill, ask to use ElicitMesh, or mention `$elicit-mesh:em-brainstorm`, `$elicit-mesh:em-diagram`, or `$elicit-mesh:em-review`. The umbrella skill is `$elicit-mesh:elicit-mesh`.
 
+To update an existing Codex installation:
+
+```sh
+codex plugin marketplace upgrade elicitmesh
+codex plugin add elicit-mesh@elicitmesh
+```
+
+Start a new session after updating.
+
 See the official [Codex skills](https://developers.openai.com/codex/skills) and [plugin documentation](https://developers.openai.com/codex/plugins/build). For versions without plugins, extract a skill ZIP into `~/.agents/skills/` or your project's `.agents/skills/`; standalone skills use names such as `$em-diagram`. Choose one installation method to avoid duplicate entries.
 
 ## Claude.ai and portable skills
@@ -63,15 +93,37 @@ In Claude.ai, upload the chosen ZIP under **Settings → Capabilities → Skills
 
 Each ZIP is self-contained with instructions, shared references, examples, renderer, and validator. Other compatible agents can use its extracted skill directory. English and Traditional Chinese are supported; YAML keys and IDs stay in English.
 
-## Example request
+## Try your first workflow
+
+After installing, use these prompts in your agent conversation. Each stage can also be used on its own.
+
+### 1. Explore the idea
 
 ```text
-Use em-diagram. I am a software engineer working with a lawyer.
-We want to agree on an information-collection workflow.
-Draw the proposed process and highlight each node's owner, inputs, and outputs.
+Use em-brainstorm. I am a software engineer working with a lawyer.
+We want to clarify an information-collection process before building it.
+Help us agree on the goal, roles, boundaries, and questions to resolve.
+```
+
+### 2. Draw the process
+
+```text
+Use em-diagram. Turn our brief into a proposed workflow diagram.
+Show each node's action, owner, inputs, and outputs inside the diagram.
 Mark unknown fields and decision conditions for the lawyer to confirm.
 Do not generate an application document.
 ```
+
+### 3. Review and revise
+
+```text
+Use em-review on our workflow diagram and I/O contracts.
+Find missing inputs, unclear output formats, and ambiguous branches.
+Group questions by the person who can answer them.
+Incorporate the corrections we provide and keep unresolved requirements pending.
+```
+
+You can stop with the proposed diagram and questions while waiting for expert feedback. Reviewing a diagram with AI does not establish professional approval.
 
 Examples: [engineer + lawyer](examples/legal-unfair-dismissal/README.md) and [QS + site supervisor](examples/construction-scope/README.md). They illustrate specifications, not authoritative legal or construction procedures. No expert review is claimed.
 
