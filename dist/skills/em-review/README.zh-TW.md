@@ -26,13 +26,13 @@ ElicitMesh 協助協作者在實作前釐清流程、每一步的負責人與未
 
 ## 你會得到什麼
 
-例如，從「協助團隊就資料收集流程達成共識」的想法，可以整理成這樣的圖：
+例如，AI 工程師與律師討論資料收集流程時，可以整理成這樣的圖：
 
 ```mermaid
 flowchart TD
-    A["收集需求<br/>負責人：收件協調者<br/>輸入：需求說明<br/>輸出：需求紀錄<br/>狀態：候選流程／待審查"]
-    B["找出缺少的資訊<br/>負責人：流程專家<br/>輸入：需求紀錄<br/>輸出：待釐清問題清單<br/>狀態：候選流程／待審查"]
-    C["確認欄位需求<br/>負責人：具核准權限的審查者<br/>輸入：需求紀錄、待釐清問題清單<br/>輸出：經審查的欄位清單或修正意見<br/>狀態：候選流程／待審查"]
+    A["整理已提供的資料<br/>負責人：AI／軟體工程師<br/>輸入：申請人提供的資料<br/>輸出：候選資料收集紀錄<br/>狀態：候選流程／待審查"]
+    B["找出缺少的資訊<br/>負責人：AI／軟體工程師<br/>輸入：候選資料收集紀錄<br/>輸出：候選欄位規格<br/>狀態：候選流程／待審查"]
+    C["審查欄位需求<br/>負責人：律師<br/>輸入：候選欄位規格<br/>輸出：審查意見或待釐清問題<br/>狀態：候選流程／待審查"]
     A -->|已記錄需求| B
     B -->|已列出問題| C
     C -->|需要更多資訊| A
@@ -125,7 +125,7 @@ codex plugin add elicit-mesh@elicitmesh
 
 等待專家回饋時，可以先以候選流程圖與問題清單作為本次成果。AI 對流程圖的檢視不代表已取得專業核准。
 
-範例：[工程師與律師](examples/legal-unfair-dismissal/README.md)、[工料測量師與工地主管](examples/construction-scope/README.md)。這些是規格示例，不是權威法律或施工程序，也不宣稱已經專家審查。
+目前僅保留 [AI／軟體工程師與律師](examples/legal-unfair-dismissal/README.md)的範例。這是候選規格示例，不是權威法律程序，其領域需求尚未經專家驗證。其他領域範例延後至能夠審查時再加入。
 
 ## 檔案與檢查
 
@@ -147,7 +147,6 @@ codex plugin add elicit-mesh@elicitmesh
 python -m pip install -r requirements.txt
 python scripts/render_diagram.py examples/legal-unfair-dismissal
 python scripts/validate_spec.py examples/legal-unfair-dismissal
-python scripts/validate_spec.py examples/construction-scope
 python -m unittest discover -s tests -v
 ```
 

@@ -39,8 +39,9 @@ class DistributionTests(unittest.TestCase):
                 self.assertTrue((skill / "scripts/render_diagram.py").is_file())
                 self.assertFalse(any(skill.rglob("sample-output.md")))
                 self.assertFalse(any(skill.rglob("quality-rules.yaml")))
-                for example in ("legal-unfair-dismissal", "construction-scope"):
-                    self.assertEqual(validate_project(skill / "examples" / example), [])
+                self.assertEqual({p.name for p in (skill / "examples").iterdir() if p.is_dir()},
+                                 {"legal-unfair-dismissal"})
+                self.assertEqual(validate_project(skill / "examples/legal-unfair-dismissal"), [])
 
     def test_download_matches_source_and_build_is_reproducible(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -64,5 +65,4 @@ class DistributionTests(unittest.TestCase):
             for file in ("SKILL.md", "README.md", "README.zh-TW.md", "LICENSE",
                          "references/schema.md", "scripts/validate_spec.py"):
                 self.assertTrue((skill / file).is_file(), file)
-            for example in ("legal-unfair-dismissal", "construction-scope"):
-                self.assertEqual(validate_project(skill / "examples" / example), [])
+            self.assertEqual(validate_project(skill / "examples/legal-unfair-dismissal"), [])

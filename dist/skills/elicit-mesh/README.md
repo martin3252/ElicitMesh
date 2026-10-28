@@ -26,13 +26,13 @@ Every diagram node shows **action, owner, inputs, outputs, and approval status**
 
 ## What you get
 
-For an idea such as “help our team agree on the intake process,” the output can look like this:
+For an AI engineer and lawyer discussing an information-collection process, the output can look like this:
 
 ```mermaid
 flowchart TD
-    A["Collect request<br/>Owner: Intake coordinator<br/>Inputs: request details<br/>Outputs: request record<br/>Status: proposed / pending review"]
-    B["Identify missing information<br/>Owner: Process specialist<br/>Inputs: request record<br/>Outputs: clarification list<br/>Status: proposed / pending review"]
-    C["Confirm field requirements<br/>Owner: Authorized reviewer<br/>Inputs: request record, clarification list<br/>Outputs: reviewed field list or corrections<br/>Status: proposed / pending review"]
+    A["Collect supplied information<br/>Owner: AI/software engineer<br/>Inputs: applicant-provided details<br/>Outputs: candidate intake record<br/>Status: proposed / pending review"]
+    B["Identify missing information<br/>Owner: AI/software engineer<br/>Inputs: candidate intake record<br/>Outputs: proposed field specification<br/>Status: proposed / pending review"]
+    C["Review field requirements<br/>Owner: Lawyer<br/>Inputs: proposed field specification<br/>Outputs: review findings or questions<br/>Status: proposed / pending review"]
     A -->|Request recorded| B
     B -->|Questions identified| C
     C -->|More information needed| A
@@ -125,7 +125,7 @@ Incorporate the corrections we provide and keep unresolved requirements pending.
 
 You can stop with the proposed diagram and questions while waiting for expert feedback. Reviewing a diagram with AI does not establish professional approval.
 
-Examples: [engineer + lawyer](examples/legal-unfair-dismissal/README.md) and [QS + site supervisor](examples/construction-scope/README.md). They illustrate specifications, not authoritative legal or construction procedures. No expert review is claimed.
+The current example is [AI/software engineer + lawyer](examples/legal-unfair-dismissal/README.md). It illustrates a candidate specification, not an authoritative legal procedure. Its domain requirements have not been expert-verified. Additional domain examples are deferred until they can be reviewed.
 
 ## Files and checks
 
@@ -147,7 +147,6 @@ No sample domain document or quality-rule file is required. Python is optional f
 python -m pip install -r requirements.txt
 python scripts/render_diagram.py examples/legal-unfair-dismissal
 python scripts/validate_spec.py examples/legal-unfair-dismissal
-python scripts/validate_spec.py examples/construction-scope
 python -m unittest discover -s tests -v
 ```
 

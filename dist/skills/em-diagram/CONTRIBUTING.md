@@ -6,7 +6,7 @@ Contributions are welcome if they improve the safety, clarity or portability of 
 
 1. Include a minimal redacted or synthetic input and expected output.
 2. Explain which failure mode it addresses (role ambiguity, missing node I/O, source provenance, review authority, or unclear branches).
-3. Run `python -m unittest discover -s tests -v` and validate both example bundles.
+3. Run `python -m unittest discover -s tests -v` and validate `examples/legal-unfair-dismissal`, the AI engineer–lawyer example. Additional domain examples should wait until they can be reviewed.
 4. Do not commit real client data, actual legal advice to a named person, private drawings, credentials, or privileged documents.
 5. Never add a blanket instruction to accept AI review as professional approval.
 

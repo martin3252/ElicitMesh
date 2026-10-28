@@ -1,6 +1,6 @@
 {
   "name": "elicit-mesh",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Brainstorm, diagram, and review workflows with per-node input/output specifications. Supports English and Traditional Chinese.",
   "author": { "name": "Martin Huang" },
   "homepage": "https://github.com/martin3252/ElicitMesh",

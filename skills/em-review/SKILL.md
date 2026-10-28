@@ -11,7 +11,7 @@ Shared resources live beside this installed skill; in the source checkout use th
 
 1. Inspect the diagram, role map, source inventory, and contracts. Identify missing inputs, vague output formats, broken handoffs, unclear branches, and unassigned responsibility. Check each diagram node against its I/O contract.
 2. Group high-impact questions by the real role who can answer them. Distinguish AI critique from expert comments. If authorized fresh-context reviewers are available, follow the shared protocol; otherwise label the critique as single-context.
-3. Present findings and proposed changes. Without human feedback, leave the review pending and provide `expert-questions.md`; never simulate a lawyer or QS sign-off.
+3. Present findings and proposed changes. Without human feedback, leave the review pending and provide `expert-questions.md`; never simulate professional sign-off.
 4. For actual corrections, record the exact feedback, diagram version, affected node/field, reviewer role and consented identity, and date in `review-log.yaml`. Capture disagreements and unresolved questions.
 5. Revise `workflow.yaml` and `io-contract.yaml`, then regenerate `workflow.md`. Mark specific requirements approved only after an authorized person confirms their scope and version. A generic instruction to continue is not professional approval.
 6. Run structural validation when possible. Deliver the revised diagram, a short change summary, and remaining questions with owners. Do not produce a final domain document or reusable quality-rule set.

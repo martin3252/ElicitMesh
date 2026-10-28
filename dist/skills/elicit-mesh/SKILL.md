@@ -42,6 +42,5 @@ These commands require Python and PyYAML and check structural consistency only. 
 ## Examples
 
 - `examples/legal-unfair-dismissal/`: candidate information-collection workflow for engineer/lawyer discussion.
-- `examples/construction-scope/`: candidate source and clarification workflow for QS/site-supervisor discussion.
 
 EGM inspired the independent-review pattern. This skill works without EGM and bundles none of its code or reviewer prompts.

@@ -33,9 +33,6 @@ class ValidationTests(unittest.TestCase):
     def test_legal_example_is_structurally_valid(self):
         self.assertEqual(validate_project(self.example()), [])
 
-    def test_construction_example_is_structurally_valid(self):
-        self.assertEqual(validate_project(self.example("construction-scope")), [])
-
     def test_approval_without_reviewer_fails(self):
         folder = self.example()
         self.mutate(folder, "workflow.yaml", lambda doc: doc["nodes"][0].update({"approval_status": "approved"}))

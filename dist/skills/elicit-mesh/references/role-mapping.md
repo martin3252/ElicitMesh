@@ -24,4 +24,4 @@ Identify collaboration participants by what they **actually do**, not what the a
 
 ## Approval authority
 
-Distinguish `provider`, `executor`, `technical_reviewer`, `domain_reviewer`, and `final_approver`. These may be the same individual, but never assume that. A lawyer may approve legal quality but not database architecture. A QS may confirm quantity or scope aspects without authorizing unsafe construction instructions. Final release authority may belong to a product owner rather than either specialist.
+Distinguish `provider`, `executor`, `technical_reviewer`, `domain_reviewer`, and `final_approver`. These may be the same individual, but never assume that. A lawyer may approve legal requirements but not database architecture. Final release authority may belong to a product owner rather than either the lawyer or the engineer.

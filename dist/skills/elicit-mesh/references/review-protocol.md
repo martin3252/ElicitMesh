@@ -13,7 +13,7 @@ Assign each finding to a real role and affected node/field. Present a short prio
 
 ## AI critique
 
-Use fresh-context reviewers only when available and authorized. Supply only the diagram, role map, I/O contracts, sources, and this rubric. Verify the review actually ran. Without isolation, label the result `single-context critique (not independent)`. Do not call simulated lawyer/QS personas professional approval.
+Use fresh-context reviewers only when available and authorized. Supply only the diagram, role map, I/O contracts, sources, and this rubric. Verify the review actually ran. Without isolation, label the result `single-context critique (not independent)`. Do not call a simulated lawyer persona professional approval.
 
 AI critique may identify assumptions and questions. Only an authorized person can confirm domain requirements. Do not send confidential information to another service without authorization.
 
