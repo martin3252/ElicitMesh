@@ -23,6 +23,21 @@ A software engineer implementing a legal-document workflow may read public proce
 
 ## Quick start
 
+### Codex
+
+With a current Codex CLI that supports `codex plugin`, run these commands in your terminal:
+
+```sh
+codex plugin marketplace add martin3252/ElicitMesh
+codex plugin add elicit-mesh@elicitmesh
+```
+
+Start a new Codex session and ask it to **use ElicitMesh**. Select it from the skill picker if available, or mention `$elicit-mesh:elicit-mesh` for the plugin installation (`$elicit-mesh` for a standalone skill installation). The same skill supports English and Traditional Chinese; YAML keys stay in English. The plugin only bundles local instructions and resources, so no additional service credentials are needed.
+
+For Codex versions without plugin commands, download [skill.zip](https://github.com/martin3252/ElicitMesh/raw/refs/heads/main/dist/skill.zip) and extract its `elicit-mesh/` directory into `~/.agents/skills/` for personal use, or `<your-project>/.agents/skills/` for project use. Start a new session after installation. Install using one method to avoid duplicate skill entries. To update a manual installation, replace that skill directory with the contents of a newer ZIP after preserving any local edits.
+
+See the official [Codex skills](https://developers.openai.com/codex/skills) and [plugin documentation](https://developers.openai.com/codex/plugins/build) for host-specific details.
+
 ### Claude Code
 
 Run these commands inside Claude Code:
@@ -100,14 +115,14 @@ These checks catch inconsistent node IDs, invalid role references, untraceable `
 
 ## Packaging for maintainers
 
-The marketplace registers the repository-root skill using Claude Code's skill-bundle format (`strict: false`), keeping one canonical copy of the skill and its resources. No separate plugin manifest is needed. After changing distributable files, rebuild the committed download:
+The repository-root skill and resources are the canonical sources. Codex uses `.agents/plugins/marketplace.json` and `.codex-plugin/plugin.json` with a generated `dist/skills/elicit-mesh/` bundle; Claude Code registers the root through `.claude-plugin/marketplace.json` with its skill-bundle format (`strict: false`). No separate Claude plugin manifest is needed. After changing distributable files, rebuild both committed packages:
 
 ```sh
 python scripts/build_skill.py
 python -m unittest discover -s tests -v
 ```
 
-Commit `dist/skill.zip` with its source changes so the download stays current. The archive uses a fixed timestamp and excludes Git metadata, local environments, caches, and marketplace configuration.
+Commit `dist/skill.zip` and `dist/skills/` with their source changes. Do not edit the generated files directly; tests verify they match the canonical sources. The archive uses a fixed timestamp and excludes Git metadata, local environments, caches, and marketplace configuration.
 
 ## Optional EGM integration
 

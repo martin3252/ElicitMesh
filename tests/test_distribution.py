@@ -8,11 +8,23 @@ from zipfile import ZipFile
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from build_skill import build
+from build_skill import build, build_codex
 from validate_spec import validate_project
 
 
 class DistributionTests(unittest.TestCase):
+    def test_codex_bundle_matches_the_portable_archive(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            destination = Path(tmp)
+            build_codex(destination)
+            generated = {p.relative_to(destination).as_posix(): p.read_bytes()
+                         for p in destination.rglob("*") if p.is_file()}
+            committed = ROOT / "dist/skills"
+            self.assertEqual(generated, {p.relative_to(committed).as_posix(): p.read_bytes()
+                                         for p in committed.rglob("*") if p.is_file()})
+            with ZipFile(ROOT / "dist/skill.zip") as archive:
+                self.assertEqual(generated, {n: archive.read(n) for n in archive.namelist()})
+
     def test_download_matches_source_and_build_is_reproducible(self):
         with tempfile.TemporaryDirectory() as tmp:
             first, second = Path(tmp) / "first.zip", Path(tmp) / "second.zip"

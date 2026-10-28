@@ -1,0 +1,30 @@
+nodes:
+  - id: collect_scope_sources
+    title: Collect drawings and BOQ references
+    owner_role: qs
+    evidence_status: inferred
+    approval_status: pending
+    source_refs: []
+  - id: prepare_scope_summary
+    title: Prepare candidate work-scope summary
+    owner_role: qs
+    evidence_status: inferred
+    approval_status: pending
+    source_refs: []
+  - id: review_site_clarity
+    title: Site supervisor checks scope clarity and identifies issues
+    owner_role: supervisor
+    evidence_status: inferred
+    approval_status: pending
+    source_refs: []
+edges:
+  - from: collect_scope_sources
+    to: prepare_scope_summary
+    condition: Documents and revisions identified or explicitly marked missing
+    evidence_status: inferred
+    approval_status: pending
+  - from: prepare_scope_summary
+    to: review_site_clarity
+    condition: Candidate scope summary is available for discussion, not construction authorization
+    evidence_status: inferred
+    approval_status: pending

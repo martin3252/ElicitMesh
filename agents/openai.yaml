@@ -2,3 +2,4 @@ interface:
   display_name: "ElicitMesh"
   short_description: "Role-aware expert knowledge to verifiable specs"
   brand_color: "#2563EB"
+  default_prompt: "Use $elicit-mesh to map collaboration roles, propose a workflow, and draft an artifact for expert review. Respond in my language."

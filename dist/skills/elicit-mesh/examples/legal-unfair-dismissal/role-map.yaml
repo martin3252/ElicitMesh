@@ -1,0 +1,19 @@
+project:
+  title: Unfair dismissal draft workflow (illustrative)
+  goal: Produce a reviewable application draft from applicant-supplied facts
+  domain: legal-tech
+roles:
+  - id: engineer
+    title: AI/software engineer
+    expertise: [software integration, data handling, document generation]
+    provides: [candidate workflow, input UI, sample draft, technical checks]
+    needs: [domain-required fields, output quality expectations, exceptions]
+    responsibilities: [implement workflow, implement deterministic checks]
+    can_approve: [technical behavior]
+  - id: lawyer
+    title: Lawyer
+    expertise: [legal process, legal document quality]
+    provides: [domain review, corrections to draft, approval of domain rules]
+    needs: [candidate workflow, concrete sample draft, known facts and sources]
+    responsibilities: [review domain requirements, review draft quality]
+    can_approve: [scoped legal content requirements]

@@ -1,0 +1,19 @@
+project:
+  title: Construction work-scope confirmation (illustrative)
+  goal: Produce a reviewable site work-scope summary that identifies disputed or missing information
+  domain: construction
+roles:
+  - id: qs
+    title: Quantity surveyor
+    expertise: [scope and quantities, cost and contract documents]
+    provides: [candidate work scope, BOQ references, requested documents]
+    needs: [site conditions, scope clarification requests]
+    responsibilities: [review quantity and scope references]
+    can_approve: [scoped commercial documentation where authorized]
+  - id: supervisor
+    title: Site supervisor
+    expertise: [site coordination, actual conditions]
+    provides: [site observations, questions about scope]
+    needs: [clear locations, approved drawings and scope references]
+    responsibilities: [review site clarity, escalate discrepancies]
+    can_approve: [site coordination review where authorized]

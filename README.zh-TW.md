@@ -23,6 +23,21 @@ ElicitMesh 是開源的 Agent Skill，協助開發者與領域專家將不完整
 
 ## 快速開始
 
+### Codex
+
+若使用支援 `codex plugin` 的新版 Codex CLI，請在終端機執行：
+
+```sh
+codex plugin marketplace add martin3252/ElicitMesh
+codex plugin add elicit-mesh@elicitmesh
+```
+
+開啟新的 Codex 對話並要求它「使用 ElicitMesh」。若有技能選單，可從選單選取；以外掛安裝時也可以輸入 `$elicit-mesh:elicit-mesh`，獨立安裝技能時則使用 `$elicit-mesh`。同一份技能支援英文與繁體中文，YAML 欄位名稱維持英文。外掛只包含本機指令與資源，不需要額外的服務憑證。
+
+若 Codex 版本尚未支援外掛指令，請下載 [skill.zip](https://github.com/martin3252/ElicitMesh/raw/refs/heads/main/dist/skill.zip)，將其中的 `elicit-mesh/` 目錄解壓縮至 `~/.agents/skills/`（個人使用）或 `<你的專案>/.agents/skills/`（專案使用），再開啟新的對話。請擇一安裝，避免重複顯示技能。手動安裝的更新方式：先保留本機修改，再以新版 ZIP 的內容取代該技能目錄。
+
+各環境的細節請參閱官方 [Codex 技能說明](https://developers.openai.com/codex/skills)與[外掛文件](https://developers.openai.com/codex/plugins/build)。
+
 ### Claude Code
 
 在 Claude Code 中執行：
@@ -99,14 +114,14 @@ python -m unittest discover -s tests -v
 
 ## 維護者打包方式
 
-市集採用 Claude Code 的技能套件格式（`strict: false`），直接註冊儲存庫根目錄的技能，讓技能及資源只需維護一份，不需另外建立外掛資訊檔。修改發佈內容後，請重新建立納入版本控制的下載檔：
+儲存庫根目錄的技能及資源是唯一維護來源。Codex 使用 `.agents/plugins/marketplace.json` 與 `.codex-plugin/plugin.json`，載入產生的 `dist/skills/elicit-mesh/` 套件；Claude Code 使用 `.claude-plugin/marketplace.json` 的技能套件格式（`strict: false`）註冊根目錄，不需另外建立 Claude 外掛資訊檔。修改發佈內容後，請重新建立兩個納入版本控制的套件：
 
 ```sh
 python scripts/build_skill.py
 python -m unittest discover -s tests -v
 ```
 
-請將 `dist/skill.zip` 與來源變更一併提交，確保下載內容保持最新。ZIP 使用固定時間戳記，且不包含 Git 資料、本機虛擬環境、快取及市集設定。
+請將 `dist/skill.zip`、`dist/skills/` 與來源變更一併提交。不要直接編輯產生的檔案；測試會確認它們與維護來源一致。ZIP 使用固定時間戳記，且不包含 Git 資料、本機虛擬環境、快取及市集設定。
 
 ## 選用的 EGM 整合
 
