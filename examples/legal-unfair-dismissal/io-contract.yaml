@@ -1,0 +1,73 @@
+contracts:
+  - node_id: collect_facts
+    inputs:
+      - name: applicant_details
+        type: object
+        required: unknown
+        evidence_status: inferred
+        approval_status: pending
+        source_refs: []
+        approver_role: lawyer
+      - name: employment_history
+        type: object
+        required: unknown
+        evidence_status: inferred
+        approval_status: pending
+        source_refs: []
+        approver_role: lawyer
+      - name: dismissal_date
+        type: date
+        required: unknown
+        evidence_status: inferred
+        approval_status: pending
+        source_refs: []
+        approver_role: lawyer
+    outputs:
+      - name: candidate_intake_record
+        format: structured_data
+        quality_criteria: [Preserve supplied information, Label missing details explicitly]
+        evidence_status: inferred
+        approval_status: pending
+        source_refs: []
+        approver_role: lawyer
+  - node_id: draft_document
+    inputs:
+      - name: candidate_intake_record
+        type: object
+        required: unknown
+        evidence_status: inferred
+        approval_status: pending
+        source_refs: []
+        approver_role: lawyer
+      - name: form_version
+        type: string
+        required: unknown
+        evidence_status: unknown
+        approval_status: needs_info
+        source_refs: []
+        approver_role: lawyer
+    outputs:
+      - name: application_draft
+        format: document_format_to_confirm
+        quality_criteria: [No invented case facts, Flag missing information, Clearly state draft status]
+        evidence_status: inferred
+        approval_status: pending
+        source_refs: []
+        approver_role: lawyer
+  - node_id: review_draft
+    inputs:
+      - name: application_draft
+        type: document
+        required: unknown
+        evidence_status: inferred
+        approval_status: pending
+        source_refs: []
+        approver_role: lawyer
+    outputs:
+      - name: lawyer_review_findings
+        format: annotated_comments
+        quality_criteria: [Identify exact section, State rationale and suggested correction]
+        evidence_status: inferred
+        approval_status: pending
+        source_refs: []
+        approver_role: lawyer
