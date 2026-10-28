@@ -23,7 +23,30 @@ ElicitMesh 是開源的 Agent Skill，協助開發者與領域專家將不完整
 
 ## 快速開始
 
-將此目錄加入相容的代理環境技能庫，或透過支援的 Skill／外掛介面安裝打包後的 `skill.zip`。請參閱所用環境目前的安裝說明；並非所有環境都支援相同路徑或呼叫方式。
+### Claude Code
+
+在 Claude Code 中執行：
+
+```text
+/plugin marketplace add martin3252/ElicitMesh
+/plugin install elicit-mesh@elicitmesh
+```
+
+若系統提示，請重新啟動 Claude Code，接著要求它「使用 ElicitMesh」。也可以輸入 `/elicit-mesh:elicit-mesh` 並接上你的需求，直接呼叫技能。它會以你的語言回覆，支援英文與繁體中文；YAML 欄位名稱則維持英文。
+
+日後更新時，執行 `/plugin marketplace update elicitmesh`，再執行 `/plugin update elicit-mesh@elicitmesh`。
+
+### Claude.ai（上傳自訂技能）
+
+下載 [skill.zip](https://github.com/martin3252/ElicitMesh/raw/refs/heads/main/dist/skill.zip)。在 Claude 的 **Settings → Capabilities → Skills（設定 → 功能 → 技能）** 中上傳為自訂技能並啟用。此功能需要支援的方案，並啟用程式碼執行與檔案建立；工作區管理員也可能限制使用。若介面不同，請參閱 Anthropic 的[最新技能使用說明](https://support.claude.com/en/articles/12512180-using-skills-in-claude)。接著開啟對話並要求 Claude 使用 ElicitMesh。
+
+ZIP 包含技能、參考資料、範例、驗證工具及中英文 README。此安裝方式與 Claude Code 外掛不同；日後更新時，請重新上傳新版 ZIP。
+
+### 其他相容的代理環境
+
+解壓縮 `skill.zip`，依照所用環境的說明，將 `elicit-mesh/` 目錄加入技能庫。指令工作流程本身不需要 Python；選用的結構驗證工具需要 Python 3.10 以上與 PyYAML（見下方）。
+
+### 試用
 
 範例：
 
@@ -73,6 +96,17 @@ python -m unittest discover -s tests -v
 ```
 
 這些檢查可找出不一致的節點 ID、無效的角色參照、無法追溯來源的 `source_supported` 聲明，或缺少支持資料的 `approved` 狀態。它們**不會**驗證法律要求、契約、施工安全、領域事實是否正確，也不能確認人類是否真的給予核准。任何正式系統都必須另外落實真人簽核與存取控制。
+
+## 維護者打包方式
+
+市集採用 Claude Code 的技能套件格式（`strict: false`），直接註冊儲存庫根目錄的技能，讓技能及資源只需維護一份，不需另外建立外掛資訊檔。修改發佈內容後，請重新建立納入版本控制的下載檔：
+
+```sh
+python scripts/build_skill.py
+python -m unittest discover -s tests -v
+```
+
+請將 `dist/skill.zip` 與來源變更一併提交，確保下載內容保持最新。ZIP 使用固定時間戳記，且不包含 Git 資料、本機虛擬環境、快取及市集設定。
 
 ## 選用的 EGM 整合
 

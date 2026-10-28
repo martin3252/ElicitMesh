@@ -1,0 +1,20 @@
+{
+  "name": "elicitmesh",
+  "owner": { "name": "Martin Huang" },
+  "metadata": {
+    "description": "ElicitMesh — role-aware expert knowledge elicitation",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "elicit-mesh",
+      "description": "Turn domain expertise into workflows, concrete drafts, and reviewed quality rules. Supports English and Traditional Chinese.",
+      "version": "0.1.0",
+      "source": "./",
+      "strict": false,
+      "skills": ["./"],
+      "homepage": "https://github.com/martin3252/ElicitMesh",
+      "license": "Apache-2.0"
+    }
+  ]
+}

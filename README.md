@@ -23,7 +23,30 @@ A software engineer implementing a legal-document workflow may read public proce
 
 ## Quick start
 
-Use the Skill directly in a compatible agent environment by adding this directory to your environment's skill library or installing the packaged `skill.zip` through the available Skill/plugin UI. Check your host's current installation instructions; not all hosts support the same paths or invocation commands.
+### Claude Code
+
+Run these commands inside Claude Code:
+
+```text
+/plugin marketplace add martin3252/ElicitMesh
+/plugin install elicit-mesh@elicitmesh
+```
+
+Restart Claude Code if prompted, then ask it to **use ElicitMesh**. You can also invoke the skill explicitly with `/elicit-mesh:elicit-mesh` followed by your request. It responds in your language, including English and Traditional Chinese, while keeping YAML field names in English.
+
+To update later, run `/plugin marketplace update elicitmesh` and `/plugin update elicit-mesh@elicitmesh`.
+
+### Claude.ai (custom skill upload)
+
+Download [skill.zip](https://github.com/martin3252/ElicitMesh/raw/refs/heads/main/dist/skill.zip). In Claude's **Settings → Capabilities → Skills**, upload it as a custom skill and enable it. Custom skills require a supported plan and enabled code execution/file creation; workspace administrators may control availability. See Anthropic's [current skill instructions](https://support.claude.com/en/articles/12512180-using-skills-in-claude) if your interface differs. Then start a conversation and ask Claude to use ElicitMesh.
+
+The ZIP includes the skill, reference material, examples, validator, and both READMEs. It is separate from the Claude Code plugin installation. Re-upload a newer ZIP to update your custom skill.
+
+### Other compatible agents
+
+Extract `skill.zip` and add its `elicit-mesh/` directory to your agent's skill library using that host's installation instructions. Python is not needed for the instruction workflow; the optional structural validator needs Python 3.10+ and PyYAML (see below).
+
+### Try it
 
 Example invocation:
 
@@ -74,6 +97,17 @@ python -m unittest discover -s tests -v
 ```
 
 These checks catch inconsistent node IDs, invalid role references, untraceable `source_supported` claims, or unsupported `approved` states. They **do not** validate legal requirements, contracts, construction safety, domain correctness, or whether a human really gave approval. Real sign-off and access control must be enforced separately in any production application.
+
+## Packaging for maintainers
+
+The marketplace registers the repository-root skill using Claude Code's skill-bundle format (`strict: false`), keeping one canonical copy of the skill and its resources. No separate plugin manifest is needed. After changing distributable files, rebuild the committed download:
+
+```sh
+python scripts/build_skill.py
+python -m unittest discover -s tests -v
+```
+
+Commit `dist/skill.zip` with its source changes so the download stays current. The archive uses a fixed timestamp and excludes Git metadata, local environments, caches, and marketplace configuration.
 
 ## Optional EGM integration
 
